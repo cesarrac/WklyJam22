@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Stat  {
 
 	int value;
-	public string name {get; protected set;}
+	public string name;
 
-	int minValue, maxValue;
+	public int minValue, maxValue;
 
-	public Stat(string _name, int startValue){
-		value = startValue;
-		name = _name;
-	}
 	public Stat(string _name, int min, int max){
 		value = min;
 		name = _name;
@@ -26,5 +23,9 @@ public class Stat  {
 		}
 		return value + modifier;
 	}
-
+	public void Modify(int minModifier, int maxModifier){
+		minValue += minModifier;
+		maxValue += maxModifier;
+		value = minValue;
+	}
 }

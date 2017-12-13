@@ -13,8 +13,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Enemies
+  - Squad
   - 
   - 
   - 
@@ -49,4 +49,7 @@ TagManager:
     locked: 0
   - name: Machines
     uniqueID: 425428821
+    locked: 0
+  - name: Top
+    uniqueID: 3596292955
     locked: 0

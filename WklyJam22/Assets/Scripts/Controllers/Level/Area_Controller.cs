@@ -29,6 +29,9 @@ public class Area_Controller : MonoBehaviour {
 			area_filler = new AreaFiller();
 		area_filler.FillArea(Current);
 		SpawnTiles();
+
+		// Do characters
+		Squad_Manager.instance.SpawnSquad(new Vector2(2, 4));
 	}
 
 	void SpawnTiles(){
