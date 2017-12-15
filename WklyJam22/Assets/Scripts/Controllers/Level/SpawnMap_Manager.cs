@@ -6,7 +6,7 @@ public enum SpawnType {Enemy, NPC, Player}
 public class SpawnMap_Manager : MonoBehaviour {
 	public static SpawnMap_Manager instance {get; protected set;}
 	Dictionary<int, SpawnType> spawnX_Map;
-	void Awake(){
+	void OnEnable(){
 		instance = this;
 		spawnX_Map = new Dictionary<int, SpawnType>();
 		InitEnemies();

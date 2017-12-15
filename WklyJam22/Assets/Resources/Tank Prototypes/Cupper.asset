@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d3b9d5cd7245aa49be19af2c5cb1cf9, type: 3}
-  m_Name: Leader
+  m_Name: Cupper
   m_EditorClassIdentifier: 
-  name: Leader
-  speed: 2
-  hitPoints: 100
-  sprite: {fileID: 21300000, guid: 7ea013db6305c554cb105ba87dec21a4, type: 3}
+  name: Cupper
+  speed: 3
+  hitPoints: 5
+  sprite: {fileID: 21300000, guid: b4954a5c6aba2644ca9304b71766cb7e, type: 3}
   animatorController: {fileID: 0}
   startWeapon: {fileID: 11400000, guid: 919f93d2ca606314fb2cb34963be984f, type: 2}
   cost: 10

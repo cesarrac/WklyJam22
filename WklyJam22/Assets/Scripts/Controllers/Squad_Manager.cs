@@ -32,7 +32,8 @@ public class Squad_Manager : MonoBehaviour {
 		leader = pool.GetObjectForType("Leader", true, leaderPos);
 		leader.transform.SetParent(this.transform);
 		leader.GetComponent<TankController>().Init(leaderTank);
-	
+		leader.GetComponent<LeaderMoveControl>().Init();
+		leader.GetComponent<Leader_CombatController>().health.onHPZero += OnLeaderHPZero;
 		// TEST spawn follower
 		for (int i = 0; i < 2; i++){
 			AddNewFollower(followerTank);
@@ -51,6 +52,7 @@ public class Squad_Manager : MonoBehaviour {
 		follower.GetComponent<FollowerMoveControl>().Init();
 		follower.GetComponent<FollowerMoveControl>().SetClamps(levelMinX, levelMaxX);
 		follower.GetComponent<TankController>().Init(followerTank);
+		follower.GetComponent<Follower_CombatController>().health.onHPZero += (hp) => OnFollowerHPZero(hp, follower);
 		followerManager.AddFollower(follower);
 	}
 	public GameObject GetLeader(){
@@ -58,10 +60,30 @@ public class Squad_Manager : MonoBehaviour {
 	}
 	public GameObject[] GetFollowers(){
 		List<GameObject>followers = new List<GameObject>();
+		if (followerManager.followers.Count <= 0)
+			return followers.ToArray();
 		foreach(FollowerMoveControl follower in followerManager.followers){
 			followers.Add(follower.gameObject);
 		}
 		return followers.ToArray();
+	}
+	void OnLeaderHPZero(int hitPoints){
+		if (hitPoints > 0)
+			return;
+		FX_Manager.instance.DoFX(FXType.Death, leader.transform.position);
+		pool.PoolObject(leader);
+		// Do Game over screen
+		Game_Manager.instance.GameOver();
+	}
+	void OnFollowerHPZero(int hitPoints, GameObject followerGobj){
+		if (hitPoints > 0){
+			return;
+		}
+		FX_Manager.instance.DoFX(FXType.Death, followerGobj.transform.position);
+		followerGobj.GetComponent<Follower_CombatController>().health.onHPZero -= (hp) => OnFollowerHPZero(hp, followerGobj);
+		followerGobj.transform.SetParent(null);
+		pool.PoolObject(followerGobj);
+		followerManager.SetFollowers();
 	}
 
 	public void SetMovementClamps(int minX, int maxX){

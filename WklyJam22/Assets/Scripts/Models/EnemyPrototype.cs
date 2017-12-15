@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Enemy", menuName = "Enemies/New Enemy")]
 public class EnemyPrototype : ScriptableObject {
-	public new string name = "new enemy";
+	public new string name = "New Enemy";
 	public float waitToMove = 1;
 	public float moveDuration = 10;
 	public TankPrototype tankToUse = null;

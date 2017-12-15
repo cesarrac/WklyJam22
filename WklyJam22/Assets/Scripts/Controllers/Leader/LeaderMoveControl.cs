@@ -22,7 +22,7 @@ public class LeaderMoveControl : MonoBehaviour {
 		//spriteSorter = GetComponent<SpriteSorter>();
 	}
 
-	void Start(){
+	public void Init(){
 		areaWidth = Area_Controller.instance.Current.Width;
 		Camera_Controller.instance.SetTargetAndLock(this.transform);
 		pool = ObjectPool.instance;

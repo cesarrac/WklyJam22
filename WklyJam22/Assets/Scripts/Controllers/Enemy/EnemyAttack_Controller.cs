@@ -40,7 +40,12 @@ public class EnemyAttack_Controller : Attack_Controller {
 			target = Squad_Manager.instance.GetLeader();
 		}else{
 			GameObject[] targets = Squad_Manager.instance.GetFollowers();
-			target = targets[Random.Range(0, targets.Length)];
+			if (targets.Length <= 0){
+				target = Squad_Manager.instance.GetLeader();
+			}
+			else{
+				target = targets[Random.Range(0, targets.Length)];
+			}
 		}
 		// Rotate weapon Holder to point at target
 		float z = Mathf.Atan2(target.transform.position.y - transform.position.y, target.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;

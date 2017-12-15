@@ -37,6 +37,7 @@ public class FollowerAttack_Controller : Attack_Controller {
 		if (attackCountdown == null){
 			attackCountdown = new CountdownHelper(attackRate);
 		}
+		weaponHolder.transform.eulerAngles = new Vector3(0, 0, -90);
 	}
 	public override void GetTarget(){
 
@@ -49,8 +50,10 @@ public class FollowerAttack_Controller : Attack_Controller {
 	}
     public void StartAttackCycle(){
 		//StopCoroutine("WaitAttackRate");
-        if (Combat_Manager.instance.inCombat == false)
-            return;
+        if (Combat_Manager.instance.inCombat == false){
+			 weaponHolder.transform.eulerAngles = new Vector3(0, 0, -90);
+			 return;
+		 }
 		GetTarget();
 		canAttack = true;
 		//StartCoroutine("WaitAttackRate");

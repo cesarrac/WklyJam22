@@ -24,16 +24,16 @@ public class NPC_Controller : MonoBehaviour {
 	}
 	public bool CanAddTask(NPCTask task){
 		
-		/* if (Inventory.instance.ContainsItem(task.itemRequired, task.costOfTask) == false){
+		if (Inventory.instance.ContainsItem(task.itemRequired, task.costOfTask) == false){
 			return false;
-		} */
+		}
 		if (work_Controller.CanAddTask(task) == false){
 			return false;
 		}
-		/* if (Inventory.instance.RemoveItem(task.itemRequired, task.costOfTask) == false){
+		if (Inventory.instance.RemoveItem(task.itemRequired, task.costOfTask) == false){
 			return false;
-		} */
-		//return false;
+		}
+		
 		work_Controller.SetNextTask();
 	
 		return true;

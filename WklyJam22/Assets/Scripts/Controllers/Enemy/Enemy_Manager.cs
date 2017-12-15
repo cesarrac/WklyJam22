@@ -9,7 +9,7 @@ public class Enemy_Manager : MonoBehaviour {
 	int[] spawnXPositions;
 	public delegate void OnEnemyChanged();
 	public event OnEnemyChanged onEnemySpawned, onEnemyDied;
-	public EnemyPrototype[] prototypes;
+	EnemyPrototype[] prototypes;
 	public float  timeBetweenSpawns = 30;
 	float timer;
 	bool waitingToReset;
@@ -20,7 +20,7 @@ public class Enemy_Manager : MonoBehaviour {
 	}
 	void Start(){
 		Camera_Controller.instance.onBoundsChanged += CheckCamBoundsForEnemies;
-		
+		prototypes = Resources.LoadAll<EnemyPrototype>("Enemy Prototypes/");
 
 		spawnXPositions = SpawnMap_Manager.instance.GetSpawnPositionsOf(SpawnType.Enemy);
 	}
@@ -105,5 +105,13 @@ public class Enemy_Manager : MonoBehaviour {
 		foreach(GameObject enemy in enemyGobjs){
 			enemy.GetComponent<Enemy_MoveController>().SetMovementClamps(left, right);
 		}
+	}
+	public void PoolAll(){
+		List<GameObject>toPool = enemyGobjs;
+		foreach(GameObject enemy in toPool){
+			ObjectPool.instance.PoolObject(enemy);
+			enemyGobjs.Remove(enemy);
+		}
+		toPool.Clear();
 	}
 }

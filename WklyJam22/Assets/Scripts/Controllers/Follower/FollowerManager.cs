@@ -17,7 +17,9 @@ public class FollowerManager : MonoBehaviour {
 		followers.Add(newFollower.GetComponent<FollowerMoveControl>());
 	}
 	public void SetFollowers(){
-		
+		if (transform.childCount <= 0){
+			followers.Clear();
+		}
 		for(int i = 0; i < transform.childCount; i++){
 			followers.Add(transform.GetChild(i).gameObject.GetComponent<FollowerMoveControl>());
 		}
@@ -48,5 +50,14 @@ public class FollowerManager : MonoBehaviour {
 	}
 	public void DeselectFollower(){
 		selectedFollower = null;
+	}
+	public void PoolAll(){
+		if (followers.Count <= 0)
+			return;
+		foreach(FollowerMoveControl follower in followers){
+			ObjectPool.instance.PoolObject(follower.gameObject);
+
+		}
+		followers.Clear();
 	}
 }

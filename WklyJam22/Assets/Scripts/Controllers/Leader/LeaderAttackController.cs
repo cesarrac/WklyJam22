@@ -33,9 +33,22 @@ public class LeaderAttackController : Attack_Controller {
 		if (attackCountdown == null){
 			attackCountdown = new CountdownHelper(attackRate);
 		}
+		weaponHolder.transform.eulerAngles = new Vector3(0, 0, -90);
+	}
+	public void SetTarget(GameObject enemyGobj){
+		target = enemyGobj;
+		float z = Mathf.Atan2(target.transform.position.y - transform.position.y, target.transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
+		weaponHolder.transform.eulerAngles = new Vector3(0, 0, z);
 	}
 	public void StartAttackCycle(){
-		GetTarget();
+		if (target == null)
+			return;
+		
+		 if (Combat_Manager.instance.inCombat == false){
+			weaponHolder.transform.eulerAngles = new Vector3(0, 0, -90);
+			 return;
+		 }
+		SetTarget(target);
 		canAttack = true;
 		/* StopCoroutine("WaitAttackRate");
 		StartCoroutine("WaitAttackRate"); */

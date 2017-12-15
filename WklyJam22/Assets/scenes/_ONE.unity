@@ -3584,9 +3584,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcPrototypes:
-  - {fileID: 11400000, guid: 8ba16eeb5a277194da2b160706224c52, type: 2}
-  - {fileID: 11400000, guid: fd1c552a638eaba449c8936e52edc74f, type: 2}
-  - {fileID: 11400000, guid: 89804210027753b40a84883573d35e18, type: 2}
+  - {fileID: 11400000, guid: 89ca305242678514f9329b387dde77bb, type: 2}
+  - {fileID: 11400000, guid: 2afa0f3031b651c478814e424482b842, type: 2}
+  - {fileID: 11400000, guid: 14d0037ae7281de43aab0fbc98af940d, type: 2}
 --- !u!114 &1251542178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5357,7 +5357,7 @@ GameObject:
   - component: {fileID: 2089693070}
   - component: {fileID: 2089693069}
   m_Layer: 0
-  m_Name: _GAME
+  m_Name: Database
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5374,7 +5374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1635ea462464544981bfb97a2d7adca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testItem: {fileID: 0}
 --- !u!4 &2089693070
 Transform:
   m_ObjectHideFlags: 0

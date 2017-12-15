@@ -8,10 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Recruiter Gorren
-  m_EditorClassIdentifier: Assembly-CSharp::NPCPrototype
-  name: Gorren
+  m_Script: {fileID: 11500000, guid: 0d92136e6aa44804faf21f1c9a4bc5b5, type: 3}
+  m_Name: Quilmes
+  m_EditorClassIdentifier: 
+  name: Quilmes
   npcType: 2
-  sprite: {fileID: 21300006, guid: b0ba192a951a4c944aadcc58626aff98, type: 3}
+  sprite: {fileID: 21300004, guid: b0ba192a951a4c944aadcc58626aff98, type: 3}
   animatorController: {fileID: 0}
