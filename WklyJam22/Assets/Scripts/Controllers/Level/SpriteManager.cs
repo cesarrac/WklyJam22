@@ -24,7 +24,7 @@ public class SpriteManager : MonoBehaviour {
 		//areaController = AreaController.instance;
 	}
 	public Sprite GetSprite(string name){
-		if (name == null)
+		if (name == string.Empty)
 			return defaultSprite;
 		if(name == "Floor" && floorChoices.Length > 0){
 			return floorChoices[Random.Range(0, floorChoices.Length)];

@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyBrain_Controller : MonoBehaviour {
 
 	// Decides what to do  and contains any dialogue and means to trigger it
+	
 	EnemyAttack_Controller attack_Controller;
 	
 	void OnEnable(){

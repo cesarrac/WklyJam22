@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum FXType {Death, Hit}
+public enum FXType {Death, Hit, Absorb}
 public class FX_Manager : MonoBehaviour {
 
 	public static FX_Manager instance {get; protected set;}

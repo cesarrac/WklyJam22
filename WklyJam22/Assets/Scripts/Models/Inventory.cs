@@ -23,12 +23,14 @@ public class Inventory{
             inventory_items[i] = new InventoryItem(null);
         }
     }
-    public bool AddItem(Item item){
-       
+    public bool AddItem(Item item, int count = 1){
+        if (count == 0){
+            return false;
+        }
         if (item.stackCount > 1){
             int index = ContainsItem(item.name);
             if (index >= 0){
-                inventory_items[index].count += 1;
+                inventory_items[index].count += count;
                 if (onInventoryChanged != null)
                     onInventoryChanged();
                 return true;
@@ -47,9 +49,21 @@ public class Inventory{
                 onInventoryChanged();
             return true; */
         }
-         // USING spacesFilled as the index to add items
-        inventory_items[spacesFilled].item = item;
-        inventory_items[spacesFilled].count += 1;
+        if (spacesFilled >= maxSpaces){
+           return false;
+        }
+        // Find first empty space
+        int emptyIndex = -1;
+        for(int i= 0; i <inventory_items.Length; i++){
+           if (inventory_items[i].item == null){
+               emptyIndex = i;
+           }
+        }
+        if (emptyIndex < 0){
+            return false; // no empty space found
+        }
+        inventory_items[emptyIndex].item = item;
+        inventory_items[emptyIndex].count += count;
 
         spacesFilled += 1;
 
@@ -80,6 +94,18 @@ public class Inventory{
             return false;
         return true; */
     }
+    public bool ContainsItem(string itemName, int count = 1){
+        if (inventory_items.Length == 0)
+            return false;
+         for(int i = 0; i < inventory_items.Length; i++){
+            if (inventory_items[i].item != null){
+                if (inventory_items[i].item.name == itemName && inventory_items[i].count >= count){
+                    return true;
+                }
+            }
+         }
+        return false;
+    }
     public bool RemoveItem(string itemName){
         int index = ContainsItem(itemName);
         if (index < 0){
@@ -89,7 +115,10 @@ public class Inventory{
         if (inventory_items[index].count <= 0){
             // make item null
             inventory_items[index].item = null;
+            
+            spacesFilled -= 1;
         }
+
         if (onInventoryChanged != null)
             onInventoryChanged();
         return true;
@@ -127,10 +156,38 @@ public class Inventory{
         if (inventory_items[inventoryIndex].count <= 0){
             // make item null
             inventory_items[inventoryIndex].item = null;
+            
+            spacesFilled -= 1;
         }
+        
         if (onInventoryChanged != null)
             onInventoryChanged();
         return true;
+    }
+    public bool RemoveItem(string itemName, int count = 1){
+        if (count == 0){
+            return true;
+        }
+        if (ContainsItem(itemName, count) == false)
+            return false;
+
+         for(int i = 0; i < inventory_items.Length; i++){
+            if (inventory_items[i].item != null){
+                if (inventory_items[i].item.name == itemName && inventory_items[i].count >= count){
+                    inventory_items[i].count -= count;
+                    if(inventory_items[i].count <= 0){
+                        inventory_items[i].item = null;
+                        spacesFilled -= 1;
+                    }
+                    
+                    
+                    if (onInventoryChanged != null)
+                        onInventoryChanged();
+                    return true;
+                }
+            }
+         }
+         return false;
     }
 
 }

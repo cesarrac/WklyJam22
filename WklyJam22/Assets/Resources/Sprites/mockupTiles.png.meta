@@ -1,13 +1,13 @@
 fileFormatVersion: 2
 guid: b7f516780bc915f49aac81defd3b253d
-timeCreated: 1512941455
+timeCreated: 1513179670
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: mockupTiles_0
-    21300002: mockupTiles_1
-    21300004: Floor
-    21300006: mockupTiles_3
+    21300000: Floor1
+    21300002: Floor2
+    21300004: Floor0
+    21300006: Floor3
     21300008: Edge_Bottom
     21300010: mockupTiles_5
     21300012: Edge_Top
@@ -98,7 +98,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mockupTiles_0
+      name: Floor1
       rect:
         serializedVersion: 2
         x: 1
@@ -112,7 +112,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mockupTiles_1
+      name: Floor2
       rect:
         serializedVersion: 2
         x: 66
@@ -126,7 +126,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Floor
+      name: Floor0
       rect:
         serializedVersion: 2
         x: 131
@@ -140,7 +140,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mockupTiles_3
+      name: Floor3
       rect:
         serializedVersion: 2
         x: 196

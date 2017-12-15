@@ -9,14 +9,32 @@ public class Enemy_Manager : MonoBehaviour {
 	int[] spawnXPositions;
 	public delegate void OnEnemyChanged();
 	public event OnEnemyChanged onEnemySpawned, onEnemyDied;
-	public TankPrototype enemyTank;
+	public EnemyPrototype[] prototypes;
+	public float  timeBetweenSpawns = 30;
+	float timer;
+	bool waitingToReset;
 	void Awake(){
 		instance = this;
+		enemyGobjs = new List<GameObject>();
+		waitingToReset = false;
 	}
 	void Start(){
 		Camera_Controller.instance.onBoundsChanged += CheckCamBoundsForEnemies;
-		enemyGobjs = new List<GameObject>();
-		spawnXPositions = new int[]{16};
+		
+
+		spawnXPositions = SpawnMap_Manager.instance.GetSpawnPositionsOf(SpawnType.Enemy);
+	}
+	void Update(){
+		if (enemyGobjs.Count == 0 && waitingToReset == true){
+			if (timer >= timeBetweenSpawns){
+				timer = 0;
+				waitingToReset = false;
+				spawnXPositions = SpawnMap_Manager.instance.GetSpawnPositionsOf(SpawnType.Enemy);
+				Debug.Log("ENEMIES RESET!");
+			}else{
+				timer += Time.deltaTime;
+			}
+		}
 	}
 	void CheckCamBoundsForEnemies(int leftX, int rightX){
 		for(int i = 0; i < spawnXPositions.Length; i++){
@@ -38,12 +56,19 @@ public class Enemy_Manager : MonoBehaviour {
 		} */
 	}
 	void SpawnEnemy(Vector2 position){
+		// Which enemy??
+		EnemyPrototype enemy = prototypes[Random.Range(0, prototypes.Length)];
+		Item enemyWpn = null;
+		if (enemy.weaponToUse != null){
+			enemyWpn = ItemDatabase.instance.CreateInstance(enemy.weaponToUse); // override tank wpn
+		}
 		GameObject enemyGobj = ObjectPool.instance.GetObjectForType("Enemy", true, position);
 		enemyGobj.GetComponent<EnemyBrain_Controller>().Init();
-		enemyGobj.GetComponent<TankController>().Init(enemyTank);
+		enemyGobj.GetComponent<TankController>().Init(enemy.tankToUse, enemyWpn);
 		enemyGobj.GetComponent<Enemy_CombatController>().health.onHPZero += (hp) => OnEnemyHPZero(hp, enemyGobj);
+		enemyGobj.GetComponent<Enemy_MoveController>().Init(enemy.waitToMove, enemy.moveDuration, enemy.tankToUse.speed);
 		enemyGobjs.Add(enemyGobj);
-
+		
 		// START THE COMBAT SEQUENCE
 		if (onEnemySpawned != null){
 			onEnemySpawned();
@@ -63,6 +88,8 @@ public class Enemy_Manager : MonoBehaviour {
 	}
 	public void OnEnemyDead(GameObject enemy){
 		enemyGobjs.Remove(enemy);
+		// Drop some random loot
+		Loot_Manager.instance.DropLoot(enemy.transform.position);
 		ObjectPool.instance.PoolObject(enemy);
 
 		// END THE COMBAT SEQUENCE
@@ -70,6 +97,13 @@ public class Enemy_Manager : MonoBehaviour {
 			if (onEnemyDied != null){
 				onEnemyDied();
 			}
+		}
+
+		waitingToReset = true;
+	}
+	public void SetMovementClamps(int left, int right){
+		foreach(GameObject enemy in enemyGobjs){
+			enemy.GetComponent<Enemy_MoveController>().SetMovementClamps(left, right);
 		}
 	}
 }

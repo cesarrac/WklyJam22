@@ -14,6 +14,12 @@ public class UI_Manager : MonoBehaviour {
 		pool = ObjectPool.instance;
 	}
 	public void DoDamageFX(Vector2 worldPos, int damage){
+		DoDamageFX(worldPos,  damage.ToString());
+	}
+	public void DoDamageFX(Vector2 worldPos){
+		DoDamageFX(worldPos, "Miss");
+	}
+	void DoDamageFX(Vector2 worldPos, string damage){
 		Vector2 screenPosition = RectTransformUtility.WorldToScreenPoint(Camera.main, worldPos);
 		GameObject dmgFX = pool.GetObjectForType("DamageFX", true, screenPosition);
 		dmgFX.transform.SetParent(canvas.transform);

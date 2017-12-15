@@ -11,5 +11,8 @@ public class TankPrototype : ScriptableObject {
 	public RuntimeAnimatorController animatorController = null;
 	[Header("MUST be Item of Weapon type:")]
 	public ItemPrototype startWeapon = null;
+	public int cost = 10;
+
+	public float timeToCreate = 1f;
 	
 }

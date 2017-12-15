@@ -28,9 +28,32 @@ public class LeaderAttackController : Attack_Controller {
 			weaponHolder.GetComponent<SpriteRenderer>().sprite = weapon.sprite;
 			curWpnController = weaponHolder.GetComponent<Weapon_Controller>();
 		}
+		attackRate = weapon.stats[1].GetValue();
+		accuracy = weapon.stats[2].GetValue();
+		if (attackCountdown == null){
+			attackCountdown = new CountdownHelper(attackRate);
+		}
+	}
+	public void StartAttackCycle(){
+		GetTarget();
+		canAttack = true;
+		/* StopCoroutine("WaitAttackRate");
+		StartCoroutine("WaitAttackRate"); */
+	}
+	void Update(){
+		if (canAttack == true && target != null){
+			attackCountdown.UpdateCountdown();
+			if (attackCountdown.elapsedPercent >= 1){
+				canAttack = false;
+				Attack();
+				StartAttackCycle();
+			}
+		}
 	}
 	public override void Attack(){
 		if (curWpnController == null)
+			return;
+		if (base.CheckForMiss() == false)
 			return;
 		base.Attack();
 		if (target.GetComponent<CombatController>() == null){

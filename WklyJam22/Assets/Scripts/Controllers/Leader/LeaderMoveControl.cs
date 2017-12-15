@@ -12,6 +12,10 @@ public class LeaderMoveControl : MonoBehaviour {
 	float curSpeed {get{return pCurSpeed;} set{pCurSpeed = Mathf.Clamp(value, 0, speed);}}
 	ObjectPool pool;
 	bool flip;
+	Selection_Manager selection_Manager;
+	int clampXMin, clampXMax;
+	int areaWidth;
+	TimeManager timeManager;
 	void OnEnable(){
 		instance = this;
 		moveVector = Vector2.zero;
@@ -19,8 +23,11 @@ public class LeaderMoveControl : MonoBehaviour {
 	}
 
 	void Start(){
-		Camera_Controller.instance.SetTargetAndLock(this.transform, -100, 100, -1, 4.5f);
+		areaWidth = Area_Controller.instance.Current.Width;
+		Camera_Controller.instance.SetTargetAndLock(this.transform);
 		pool = ObjectPool.instance;
+		selection_Manager = Selection_Manager.instance;
+		timeManager = TimeManager.instance;
 	}
 
 	void Update(){
@@ -31,7 +38,8 @@ public class LeaderMoveControl : MonoBehaviour {
 				newX = lastX;
 			moveVector = new Vector3(newX, Input.GetAxisRaw("Vertical"), 0);
 			
-			transform.position += moveVector * curSpeed * Time.deltaTime;
+			transform.position += moveVector * curSpeed * timeManager.deltaTime;
+			ClampMovement();
 			if (moveVector.x != 0)
 				FlipSprites(moveVector.x);
 		}
@@ -40,17 +48,18 @@ public class LeaderMoveControl : MonoBehaviour {
 
 		if (Input.GetMouseButtonDown(1)){
 			Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			if (curWaypoint != null)
-				pool.PoolObject(curWaypoint);
+		/* 	if (curWaypoint != null)
+				pool.PoolObject(curWaypoint); */
 			curWaypoint = pool.GetObjectForType("waypoint", true, mousePos);
-			FollowerManager.instance.SetWayPoint(curWaypoint.transform);
+			FollowerManager.instance.SetWayPoint(curWaypoint);
 		}
 		if (Input.GetMouseButtonDown(0)){
-			if (curWaypoint == null)
+			selection_Manager.TrySelect();
+			/* if (curWaypoint == null)
 				return;
 
 			pool.PoolObject(curWaypoint);
-			FollowerManager.instance.CancelWaypoint();
+			FollowerManager.instance.CancelWaypoint(); */
 		}
 		if (Input.GetKeyDown(KeyCode.Q)){
 			SlowDown();
@@ -84,5 +93,26 @@ public class LeaderMoveControl : MonoBehaviour {
 	}
 	void SlowDown(){
 		curSpeed -= 0.25f;
+	}
+	void ClampMovement(){
+		float moveX = transform.position.x;
+		float moveY= transform.position.y;
+		if (moveX < clampXMin){
+			moveX = clampXMin;
+		}
+		if (moveY < 3.31f){
+			moveY = 3.31f;
+		}
+		if (moveX > clampXMax){
+			moveX = clampXMax;
+		}
+		if (moveY > 7){
+			moveY = 7;
+		}
+		transform.position = new Vector2(moveX, moveY);
+	}
+	public void SetClamps(int minX, int maxX){
+		clampXMin = minX;
+		clampXMax = maxX;
 	}
 }

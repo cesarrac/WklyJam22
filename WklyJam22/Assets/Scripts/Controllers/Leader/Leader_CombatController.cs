@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Leader_CombatController : CombatController {
 
-	float minDistToAbsorbDmg = 3;
+	float minDistToAbsorbDmg = 2;
 	
 	public override void ReceiveDamage(CombatController attacker, int damage){
 		if (health.HitPoints <= 0){
@@ -16,6 +16,8 @@ public class Leader_CombatController : CombatController {
 		int squadTotal = Squad_Manager.instance.GetFollowers().Length + 1;
 		if (squadTotal > 1){
 			totalDamage = damage / squadTotal;
+			// Do aborb fx
+			FX_Manager.instance.DoFX(FXType.Absorb, transform.position);
 			GameObject[] followers = Squad_Manager.instance.GetFollowers();
 			foreach(GameObject follower in followers){
 				if (Vector2.Distance(transform.position, follower.transform.position) <= minDistToAbsorbDmg){
@@ -27,7 +29,9 @@ public class Leader_CombatController : CombatController {
 		// Take damage
 		health.ReceiveDamage(totalDamage);
 		base.ReceiveDamage(attacker, totalDamage);
-
+		if (damage > 0){
+			FX_Manager.instance.DoFX(FXType.Hit, transform.position);
+		}
 	}
 	public override void DoDamage(CombatController target){
 		target.ReceiveDamage(this, damage.GetValue());

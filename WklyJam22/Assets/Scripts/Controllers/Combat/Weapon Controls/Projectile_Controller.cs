@@ -10,6 +10,7 @@ public class Projectile_Controller : MonoBehaviour {
 	public CombatController combat_controller, targetCombatControl;
 	public Vector2 destination;
 	float curCount;
+	public TimeManager timeManager;
 	void OnEnable(){
 		//anim = GetComponentInChildren<Animator>();
 	}
@@ -20,6 +21,7 @@ public class Projectile_Controller : MonoBehaviour {
 		destination = _destination;
 		travelDirection = direction;
 		Debug.Log("Shot projectile towards " + direction + " stopping at " + destination);
+		timeManager = TimeManager.instance;
 	}
 	public virtual bool CheckDistance(){
 		if (Vector2.Distance(transform.position, destination) < 1f){

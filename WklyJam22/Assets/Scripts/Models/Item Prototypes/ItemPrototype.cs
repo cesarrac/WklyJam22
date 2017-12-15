@@ -9,5 +9,8 @@ public class ItemPrototype : ScriptableObject{
 	public ItemType itemType;
     public ItemUseType itemUseType = ItemUseType.None;
 	public int stackCount = 50;
+    public int cost = 10;
     public Stat[] baseStats;
+    public float timeToCreate = 1f;
+    
 }

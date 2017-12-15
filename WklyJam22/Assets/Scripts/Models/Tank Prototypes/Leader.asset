@@ -13,6 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Leader
   speed: 2
+  hitPoints: 100
   sprite: {fileID: 21300000, guid: 7ea013db6305c554cb105ba87dec21a4, type: 3}
   animatorController: {fileID: 0}
-  startWeapon: {fileID: 11400000, guid: 907c01b689976c04cb522895195002fc, type: 2}
+  startWeapon: {fileID: 11400000, guid: 919f93d2ca606314fb2cb34963be984f, type: 2}
+  cost: 10
+  timeToCreate: 1

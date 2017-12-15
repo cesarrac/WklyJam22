@@ -6,6 +6,7 @@ public class FollowerManager : MonoBehaviour {
 
 	public static FollowerManager instance {get; protected set;}
 	public List<FollowerMoveControl> followers {get; protected set;}
+	FollowerMoveControl selectedFollower;
 
 	void OnEnable(){
 		instance = this;
@@ -22,14 +23,30 @@ public class FollowerManager : MonoBehaviour {
 		}
 	}
 
-	public void SetWayPoint(Transform point){
+	public void SetWayPoint(GameObject waypoint){
+		Transform point = waypoint.transform;
+		Selector_Waypoint wSelector = waypoint.GetComponent<Selector_Waypoint>();
+
+		if (selectedFollower != null){
+			selectedFollower.SetWaypoint(point);
+			wSelector.SetFollowers(new FollowerMoveControl[]{selectedFollower});
+			DeselectFollower();
+			return;
+		}
 		for(int i = 0; i < followers.Count; i++){
 			followers[i].SetWaypoint(point);
 		}
+		wSelector.SetFollowers(followers.ToArray());
 	}
 	public void CancelWaypoint(){
 		for(int i = 0; i < followers.Count; i++){
 			followers[i].CancelWaypoint();
 		}
+	}
+	public void SelectFollower(FollowerMoveControl follower){
+		selectedFollower = follower;
+	}
+	public void DeselectFollower(){
+		selectedFollower = null;
 	}
 }

@@ -12,6 +12,9 @@ public class Follower_CombatController : CombatController {
 		}
 		health.ReceiveDamage(damage);
 		base.ReceiveDamage(attacker, damage);
+		if (damage > 0){
+			FX_Manager.instance.DoFX(FXType.Hit, transform.position);
+		}
 	}
 	public override void DoDamage(CombatController target){
 		int dmgModifier = 0;
@@ -34,5 +37,6 @@ public class Follower_CombatController : CombatController {
 		}
 
 		target.ReceiveDamage(this, damage.GetValue(dmgModifier));
+	
 	}
 }

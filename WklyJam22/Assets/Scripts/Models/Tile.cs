@@ -11,17 +11,21 @@ public class Tile  {
 	public int X {get; protected set;}
 	public int Y {get; protected set;}
 	public Vector2 worldPos {get; protected set;}
-	//public Extractable extractable {get; protected set;}
+	public string spriteID {get; protected set;}
 
 	public Tile(int _x, int _y, TileType tType, Vector2 pos, int moveCost = 1){
 		X = _x;
 		Y = _y;
 		tileType = tType;
 		worldPos = pos;
+		spriteID = string.Empty;
 	}
 
 	public void SetAs(TileType newTileType){
 		tileType = newTileType;
+	}
+	public void SetSpriteID(string id){
+		spriteID = id;
 	}
 
 /* 	public Tile[] GetNeighbors(bool getDiags = true){

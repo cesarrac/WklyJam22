@@ -11,6 +11,9 @@ public class Enemy_CombatController : CombatController {
 		}
 		health.ReceiveDamage(damage);
 		base.ReceiveDamage(attacker, damage);
+		if (damage > 0){
+			FX_Manager.instance.DoFX(FXType.Hit, transform.position);
+		}
 	}
 	public override void DoDamage(CombatController target){
 		int curDamage = damage.GetValue();

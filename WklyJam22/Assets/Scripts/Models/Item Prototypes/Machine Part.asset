@@ -9,14 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 085c091c0ef702340adcd856169d3b36, type: 3}
-  m_Name: Gun
+  m_Name: Machine Part
   m_EditorClassIdentifier: 
-  name: Gun
-  sprite: {fileID: 21300000, guid: 8ca3e3d3c9f20464eb6ddb03ced4845a, type: 3}
-  itemType: 1
-  itemUseType: 1
+  name: Machine Part
+  sprite: {fileID: 21300000, guid: 8f9748683a1011849b12ee9e17bab689, type: 3}
+  itemType: 0
+  itemUseType: 3
   stackCount: 50
-  baseStats:
-  - name: Damage
-    minValue: 2
-    maxValue: 10
+  cost: 0
+  baseStats: []

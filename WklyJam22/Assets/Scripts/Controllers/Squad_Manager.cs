@@ -9,6 +9,7 @@ public class Squad_Manager : MonoBehaviour {
 	public GameObject leader {get; protected set;}
 	public TankPrototype leaderTank, followerTank;
 	Inventory squad_inventory;
+	int levelMinX, levelMaxX;
 	public int currFollowerCount {
 		get{
 			if (followerManager == null)
@@ -18,14 +19,13 @@ public class Squad_Manager : MonoBehaviour {
 		}
 	}
 	ObjectPool pool;
-	public ItemPrototype testPrototype, testPrototype2;
 	void Awake(){
 		instance = this;
 		followerManager = GetComponentInChildren<FollowerManager>();
 
 		squad_inventory = new Inventory(10);
 	}
-	public void SpawnSquad(Vector2 leaderPos){
+	public void SpawnSquad(Vector2 leaderPos, int areaWidth){
 		if (pool == null)
 			pool = ObjectPool.instance;
 		// Leader:
@@ -34,21 +34,24 @@ public class Squad_Manager : MonoBehaviour {
 		leader.GetComponent<TankController>().Init(leaderTank);
 	
 		// TEST spawn follower
-		GameObject follower = pool.GetObjectForType("Follower", true, leaderPos + Vector2.left);
-		follower.transform.SetParent(followerManager.transform);
-		follower.GetComponent<TankController>().Init(followerTank);
-		followerManager.AddFollower(follower);
+		for (int i = 0; i < 2; i++){
+			AddNewFollower(followerTank);
+		}
+		levelMinX = 1;
+		levelMaxX = areaWidth - 1;
+		SetMovementClampsToLevel();
 		/* if (currFollowerCount > 0){
 			// Spawn followers
 		} */
 
-		// TEST INVENTORY:
-		Item testItem = ItemDatabase.instance.CreateInstance(testPrototype);
-		Item testItem2 = ItemDatabase.instance.CreateInstance(testPrototype);
-		Item testItem3 = ItemDatabase.instance.CreateInstance(testPrototype2);
-		squad_inventory.AddItem(testItem);
-		squad_inventory.AddItem(testItem2);
-		squad_inventory.AddItem(testItem3);
+	}
+	public void AddNewFollower(TankPrototype followerTank){
+		GameObject follower = pool.GetObjectForType("Follower", true, leader.transform.position + Vector3.left);
+		follower.transform.SetParent(followerManager.transform);
+		follower.GetComponent<FollowerMoveControl>().Init();
+		follower.GetComponent<FollowerMoveControl>().SetClamps(levelMinX, levelMaxX);
+		follower.GetComponent<TankController>().Init(followerTank);
+		followerManager.AddFollower(follower);
 	}
 	public GameObject GetLeader(){
 		return leader;
@@ -59,5 +62,15 @@ public class Squad_Manager : MonoBehaviour {
 			followers.Add(follower.gameObject);
 		}
 		return followers.ToArray();
+	}
+
+	public void SetMovementClamps(int minX, int maxX){
+		foreach(FollowerMoveControl follower in followerManager.followers){
+			follower.SetClamps(minX, maxX);
+		}
+		leader.GetComponent<LeaderMoveControl>().SetClamps(minX, maxX);
+	}
+	public void SetMovementClampsToLevel(){
+		SetMovementClamps(levelMinX, levelMaxX);
 	}
 }

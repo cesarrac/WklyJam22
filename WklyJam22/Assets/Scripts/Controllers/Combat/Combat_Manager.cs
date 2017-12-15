@@ -24,11 +24,17 @@ public class Combat_Manager : MonoBehaviour {
 		Camera_Controller.instance.SetTargetAndLock(combatFocus.transform);
 		inCombat = true;
 		// Clamp character movement
+		int leftClamp = Mathf.FloorToInt(combatFocus.transform.position.x - (Camera.main.orthographicSize * 0.5f));
+		int rightClamp = Mathf.CeilToInt(combatFocus.transform.position.x + (Camera.main.orthographicSize * 2) + 2);
+		Squad_Manager.instance.SetMovementClamps(leftClamp, rightClamp);
+		Enemy_Manager.instance.SetMovementClamps(leftClamp, rightClamp);
 	}
 	void EndCombat(){
 		combatFocus.SetActive(false);
+		combatFocus = null;
 		Camera_Controller.instance.SetTargetAndLock(Squad_Manager.instance.GetLeader().transform);
 		inCombat = false;
 		// Un-Clamp character movement
+		Squad_Manager.instance.SetMovementClampsToLevel();
 	}
 }

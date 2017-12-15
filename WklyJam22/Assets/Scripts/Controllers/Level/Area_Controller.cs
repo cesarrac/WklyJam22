@@ -7,34 +7,39 @@ public class Area_Controller : MonoBehaviour {
 	public static Area_Controller instance {get; protected set;} 
 	public Area Current {get; protected set;}
 	AreaFiller area_filler;
-	ObjectPool pool;
+/* 	ObjectPool pool;
 	SpriteManager spriteMgr;
-	GameObject tileHolder;
+	GameObject tileHolder; */
 
 	void Awake(){
 		instance = this;
 	}
 	void Start(){
-		tileHolder = new GameObject();
+/* 		tileHolder = new GameObject();
 		tileHolder.name = "Tiles";
 		pool = ObjectPool.instance;
-		spriteMgr = SpriteManager.instance;
+		spriteMgr = SpriteManager.instance; */
 		GenerateArea();
 	}
 
 	void GenerateArea(){
-		Current = new Area(24, 10, "test");
+		Current = new Area(40, 10, "test");
 		Current.Generate();
 		if (area_filler == null)
 			area_filler = new AreaFiller();
 		area_filler.FillArea(Current);
-		SpawnTiles();
+
+		Vector2 startingPos = new Vector2(6, 4);
+		Tile_Manager.instance.Init(Current, startingPos);
+		//SpawnTiles();
 
 		// Do characters
-		Squad_Manager.instance.SpawnSquad(new Vector2(2, 4));
+		Squad_Manager.instance.SpawnSquad(startingPos, Current.Width);
+		NPC_Manager.instance.SpawnNPCs();
+		//Tile_Manager.instance.SpawnBackgrounds();
 	}
 
-	void SpawnTiles(){
+/* 	void SpawnTiles(){
 		int width = Current.Width;
 		int height = Current.Height;
 		for(int x = 0; x < width; x++){
@@ -48,6 +53,6 @@ public class Area_Controller : MonoBehaviour {
 				sr.sprite = spriteMgr.GetSprite(tile.tileType.ToString());
 			}
 		}
-	}
+	} */
 	
 }

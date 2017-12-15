@@ -9,11 +9,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 085c091c0ef702340adcd856169d3b36, type: 3}
-  m_Name: Test Resource
+  m_Name: Obsidian Rifle
   m_EditorClassIdentifier: 
-  name: Test Resource
+  name: Obsidian Rifle
   sprite: {fileID: 21300000, guid: 8f9748683a1011849b12ee9e17bab689, type: 3}
-  itemType: 0
-  itemUseType: 0
-  stackCount: 10
-  baseStats: []
+  itemType: 1
+  itemUseType: 1
+  stackCount: 1
+  cost: 15
+  baseStats:
+  - name: Damage
+    minValue: 5
+    maxValue: 15
+  - name: Rate
+    minValue: 3
+    maxValue: 4
+  - name: Accuracy
+    minValue: 80
+    maxValue: 90
+  timeToCreate: 1

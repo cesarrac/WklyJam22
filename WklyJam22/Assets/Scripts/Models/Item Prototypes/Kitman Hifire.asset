@@ -16,7 +16,15 @@ MonoBehaviour:
   itemType: 1
   itemUseType: 1
   stackCount: 1
+  cost: 10
   baseStats:
   - name: Damage
     minValue: 2
     maxValue: 5
+  - name: Attack Rate
+    minValue: 1
+    maxValue: 2
+  - name: Accuracy
+    minValue: 45
+    maxValue: 65
+  timeToCreate: 1

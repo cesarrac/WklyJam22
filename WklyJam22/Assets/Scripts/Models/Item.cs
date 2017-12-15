@@ -14,7 +14,7 @@ public class Item  {
 	public Stat[] stats {get; protected set;}
 	public Sprite sprite {get; protected set;}
 	public GameObject user;
-
+	public int costToCreate {get; protected set;}
 	protected Item(ItemPrototype b, ItemQuality quality, Stat[] newStats){
 		this.name = b.name;
 		this.itemType = b.itemType;
@@ -23,6 +23,7 @@ public class Item  {
 		this.stats = newStats;
 		this.sprite = b.sprite;
 		this.itemUseType = b.itemUseType;
+		this.costToCreate = b.cost;
 	}
 	public static Item CreateInstance(ItemPrototype prototype, ItemQuality quality, Stat[] newStats){
 		return new Item(prototype, quality, newStats);

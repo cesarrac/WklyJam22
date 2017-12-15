@@ -3,24 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowerMoveControl : MonoBehaviour {
-	public float speed = 1;
+	float speed = 1;
 	Transform targetTransform;
 	Vector2 targetPosition;
-	public float maxDistance = 2;
+	float maxDistance = 2;
 	private float MaxDistance;
 	bool hasToMove = false;
 	float distanceToTarget = 0;
 	FollowerAttack_Controller attack_Controller;
 	float movePercentage = 0;
 	bool flip = false;
-	void Awake(){
+	int areaWidth;
+	int clampXMin, clampXMax;
+	CountdownHelper distanceCountdown;
+	TimeManager timeManager;
+	void OnEnable(){
 		attack_Controller = GetComponent<FollowerAttack_Controller>();
-		MaxDistance = maxDistance;
+	
 	}
-	void Start(){
+	public void Init(){
+		areaWidth = Area_Controller.instance.Current.Width;
 		targetTransform = LeaderMoveControl.instance.transform;
-		SetPosition();
-		StartCoroutine("DistanceCheck");
+		hasToMove = false;
+		movePercentage = 0;
+		// Get a random max distance
+		maxDistance = Random.Range(1.5f, 3f);
+		MaxDistance = maxDistance;
+		targetPosition = targetTransform.position;
+		distanceCountdown = new CountdownHelper(1);
+		timeManager = TimeManager.instance;
+		//StartCoroutine("DistanceCheck");
 	}
 
 	void SetPosition(){
@@ -43,11 +55,27 @@ public class FollowerMoveControl : MonoBehaviour {
 	}
 
 	void Update(){
+		distanceCountdown.UpdateCountdown();
+		if (distanceCountdown.elapsedPercent >= 1){
+			DistanceCheck();
+		}
 		if (hasToMove == true){
-			movePercentage = speed * Time.deltaTime / distanceToTarget;
+			movePercentage = speed * timeManager.deltaTime / distanceToTarget;
 			transform.position = Vector2.Lerp(transform.position, targetPosition, movePercentage);
-			//sprite_sorter.UpdateSpriteSort();
+			ClampMovement();
 			FlipSprites(targetPosition.x);
+			if (movePercentage >= 1){
+				// Check if my current target contains an interactable
+				if (targetTransform != null){
+					if (targetTransform.gameObject.GetComponent<Interactable>() != null){
+						Interactable interactable = targetTransform.gameObject.GetComponent<Interactable>();
+						if (interactable.CanInteract(this.gameObject) == true){
+							interactable.Interact();
+							targetTransform = null;
+						}
+					}
+				}
+			}
 		} 
 	}
 	void FlipSprites(float x){
@@ -70,7 +98,7 @@ public class FollowerMoveControl : MonoBehaviour {
 			sRenderers[i].flipX = flip;
 		}
 	}
-	IEnumerator DistanceCheck(){
+	/* IEnumerator DistanceCheck(){
 		while(true){
 			distanceToTarget = (targetPosition - (Vector2)transform.position).magnitude;
 			if (distanceToTarget >= MaxDistance){
@@ -84,16 +112,50 @@ public class FollowerMoveControl : MonoBehaviour {
 				}
 				
 			}
-			//Debug.Log("Distance: " + distanceToTarget);
-			/* if (hasToMove == false){
-				targetTransform = null;
-			} */
+		
 			yield return new WaitForSeconds(1);
 			
 			SetPosition();
 			yield return null;
 		}
+	} */
+	void DistanceCheck(){
+		distanceToTarget = (targetPosition - (Vector2)transform.position).magnitude;
+		if (distanceToTarget >= MaxDistance){
+			hasToMove = true;
+		}else{
+			if (hasToMove != false){
+				hasToMove = false;
+				if (Combat_Manager.instance.inCombat == true){
+					attack_Controller.StartAttackCycle();
+				}
+			}
+			
+		}
+		SetPosition();
 	}
-
-
+	void ClampMovement(){
+		float moveX = transform.position.x;
+		float moveY= transform.position.y;
+		if (moveX < clampXMin){
+			moveX = clampXMin;
+		}
+		if (moveY < 3.31f){
+			moveY = 3.31f;
+		}
+		if (moveX > clampXMax){
+			moveX = clampXMax;
+		}
+		if (moveY > 7){
+			moveY = 7;
+		}
+		transform.position = new Vector2(moveX, moveY);
+	}
+	public void SetClamps(int minX, int maxX){
+		clampXMin = minX;
+		clampXMax = maxX;
+	}
+	/* void OnDisable(){
+		StopAllCoroutines();
+	} */
 }

@@ -36,7 +36,6 @@ public class ItemDatabase{
         ItemQuality randomQuality = GetRandomQuality();
         return Item.CreateInstance(prototype,randomQuality, GetStatsByQuality(randomQuality, prototype.baseStats));
     }
-
   
 }
 
