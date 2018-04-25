@@ -8,7 +8,7 @@ public class Squad_Manager : MonoBehaviour {
 	FollowerManager followerManager;
 	public GameObject leader {get; protected set;}
 	public TankPrototype leaderTank, followerTank;
-	Inventory squad_inventory;
+	
 	int levelMinX, levelMaxX;
 	public int currFollowerCount {
 		get{
@@ -23,7 +23,7 @@ public class Squad_Manager : MonoBehaviour {
 		instance = this;
 		followerManager = GetComponentInChildren<FollowerManager>();
 
-		squad_inventory = new Inventory(10);
+		new Inventory(10);
 	}
 	public void SpawnSquad(Vector2 leaderPos, int areaWidth){
 		if (pool == null)

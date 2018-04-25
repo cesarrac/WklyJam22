@@ -19,7 +19,7 @@ public class TimeManager : MonoBehaviour {
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Pause"))
             Pause();
 
         RunState();

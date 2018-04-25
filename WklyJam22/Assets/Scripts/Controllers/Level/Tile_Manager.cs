@@ -25,10 +25,10 @@ public class Tile_Manager : MonoBehaviour {
 		tileHolder.name = "Tiles";
 		pool = ObjectPool.instance;
 		spriteMgr = SpriteManager.instance;
-		Camera_Controller.instance.onBoundsChanged += OnCameraBoundsChanged;
+		//Camera_Controller.instance.onBoundsChanged += OnCameraBoundsChanged;
 		maxLeft = Mathf.CeilToInt((startPoint.x - Camera.main.orthographicSize)-offset);
 		maxRight = Mathf.FloorToInt((startPoint.x + Camera.main.orthographicSize)+offset);
-		SpawnTiles(maxLeft, maxRight);
+		SpawnTiles(0, areaWidth);
 		
 	}
 	void OnCameraBoundsChanged(int left, int right){

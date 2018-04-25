@@ -13,7 +13,6 @@ public class FollowerMoveControl : MonoBehaviour {
 	FollowerAttack_Controller attack_Controller;
 	float movePercentage = 0;
 	bool flip = false;
-	int areaWidth;
 	int clampXMin, clampXMax;
 	CountdownHelper distanceCountdown;
 	TimeManager timeManager;
@@ -22,7 +21,6 @@ public class FollowerMoveControl : MonoBehaviour {
 	
 	}
 	public void Init(){
-		areaWidth = Area_Controller.instance.Current.Width;
 		targetTransform = LeaderMoveControl.instance.transform;
 		hasToMove = false;
 		movePercentage = 0;

@@ -6,24 +6,40 @@ public class NPCWork_Controller : MonoBehaviour {
 
 	public 	Queue<NPCTask> active_tasks;
 	public List<NPCTask> available_tasks;
-	public NPCTask curTask;
+	NPCTask curTask;
 	float duration;
-	float timer;
-	public bool atWork = false;
+	bool atWork = false;
 	public TimeManager timeManager;
-	public virtual void InitTasks(){
+
+	NPCProfession curProfession;
+
+	public void Initialize(NPCProfession profession){
+		curProfession = profession;
+		curProfession.Init(this);
+	}
+	public void InitTasks(){
 		active_tasks = new Queue<NPCTask>();
 		available_tasks = new List<NPCTask>();
 		timeManager = TimeManager.instance;
 	}
-	public virtual bool CanAddTask(NPCTask task){
+	void Update(){
+		if (curTask != null && atWork == true){
+			if (IsTaskComplete() == true){
+				DoTask();
+			}
+		}
+	}
+	public bool CanAddTask(NPCTask task){
+		if (curProfession.CanWork() == false)
+			return false;
+
 		if (active_tasks.Count >= 4)
 		 	return false;
 		active_tasks.Enqueue(task);
-		return true;
 		Debug.Log("Task added to queue: " + task.description);
+		return true;
 	}
-	public virtual void SetNextTask(){
+	public void SetNextTask(){
 		if (active_tasks.Count <= 0)
 			return;
 		if (atWork == true)
@@ -34,12 +50,11 @@ public class NPCWork_Controller : MonoBehaviour {
 		atWork = true;
 		Debug.Log("Starting task " + curTask.description);
 	}
-	public virtual bool IsTaskComplete(){
+	public bool IsTaskComplete(){
 		if (duration <= 0)
 			return true;
 
 		if (curTask.timeLeft >= duration){
-			timer = 0;
 			return true;
 		}
 		else{
@@ -47,8 +62,22 @@ public class NPCWork_Controller : MonoBehaviour {
 		}
 		return false;
 	}
-	public virtual void DoTask(){
+	public void DoTask(){
 		Debug.Log("Working on " + curTask.description);
+		if (curTask == null){
+			atWork = false;
+			return;
+		}
+		if (curTask.taskAction == null){
+			Debug.LogError("Could not DO " + curTask.description + " because its action is null!");
+			return;
+		}
+		curTask.taskAction();
+
+		NPC_UIManager.instance.OnTaskDone(GetComponent<NPC_Controller>(), curTask);
+		curTask = null;
+		atWork = false;
+		SetNextTask();
 	}
 }
 

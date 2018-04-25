@@ -1,13 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Enemy", menuName = "Enemies/New Enemy")]
+[CreateAssetMenu(fileName = "New Enemy", menuName = "Enemies/New Enemy", order= 1)]
 public class EnemyPrototype : ScriptableObject {
-	public new string name = "New Enemy";
+	new public string name = "New Enemy";
 	public float waitToMove = 1;
 	public float moveDuration = 10;
-	public TankPrototype tankToUse = null;
-	public ItemPrototype weaponToUse = null;
+	public TankPrototype tankToUse;
+	public ItemPrototype weaponToUse;
 	
 }

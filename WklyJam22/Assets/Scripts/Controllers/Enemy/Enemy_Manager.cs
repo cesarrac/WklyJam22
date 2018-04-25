@@ -20,7 +20,7 @@ public class Enemy_Manager : MonoBehaviour {
 	}
 	void Start(){
 		Camera_Controller.instance.onBoundsChanged += CheckCamBoundsForEnemies;
-		prototypes = Resources.LoadAll<EnemyPrototype>("Enemy Prototypes/");
+		prototypes = Resources.LoadAll<EnemyPrototype>("ScriptObjects/Enemy Prototypes/");
 
 		spawnXPositions = SpawnMap_Manager.instance.GetSpawnPositionsOf(SpawnType.Enemy);
 	}

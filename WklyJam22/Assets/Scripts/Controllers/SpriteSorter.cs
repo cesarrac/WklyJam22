@@ -5,21 +5,16 @@ using UnityEngine;
 public class SpriteSorter : MonoBehaviour {
 
 	SpriteRenderer sprite_renderer;
-
+	CountdownHelper sortTimer;
 	void OnEnable(){
 		sprite_renderer = GetComponent<SpriteRenderer>();
+		sortTimer = new CountdownHelper(0.5f);
 	}
-	void Start(){
-		StartCoroutine("UpdateSort");
-	}
-	public void UpdateSpriteSort(){
-		sprite_renderer.sortingOrder = -(Mathf.RoundToInt(transform.position.y));
-	}
-	IEnumerator UpdateSort(){
-		while(true){
-			UpdateSpriteSort();
-			yield return new WaitForSeconds(0.25f);
-			yield return null;
+
+	void Update(){
+		sortTimer.UpdateCountdown();
+		if (sortTimer.elapsedPercent >= 1){
+			sprite_renderer.sortingOrder = -(Mathf.FloorToInt(transform.position.y));
 		}
 	}
 }

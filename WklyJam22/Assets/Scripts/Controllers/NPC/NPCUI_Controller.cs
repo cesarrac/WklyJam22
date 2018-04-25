@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class NPCUI_Controller : MonoBehaviour {
 
-	public Text name;
+	public Text nameTxt;
 	public Image portrait;
 	public GameObject availableTaskParent;
 	public Button dismissButton;
@@ -31,7 +31,7 @@ public class NPCUI_Controller : MonoBehaviour {
 		PoolTasks();
 		
 		curNPCControl = npcControl;
-		name.text = npcName;
+		nameTxt.text = npcName;
 		portrait.sprite = npcSprite;
 		foreach(NPCTask task in available){
 			GameObject taskGbj = pool.GetObjectForType("Task", true, availableTaskParent.transform.position);

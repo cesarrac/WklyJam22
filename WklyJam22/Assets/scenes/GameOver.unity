@@ -128,6 +128,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f144748febb542a4399625af4c3e6b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  restartButton: {fileID: 0}
+  quitButton: {fileID: 0}
+  startButton: {fileID: 0}
+--- !u!1 &684132217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 684132219}
+  - component: {fileID: 684132218}
+  m_Layer: 0
+  m_Name: Menu Helper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &684132218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 684132217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f144748febb542a4399625af4c3e6b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restartButton: {fileID: 764765144}
+  quitButton: {fileID: 0}
+  startButton: {fileID: 0}
+--- !u!4 &684132219
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 684132217}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &764765143
 Prefab:
   m_ObjectHideFlags: 0
@@ -230,9 +276,19 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: -334.35
       objectReference: {fileID: 0}
+    - target: {fileID: 1767879592147664, guid: 00191fbe41bfb714a80b417afd12f199, type: 2}
+      propertyPath: m_Name
+      value: Restart button
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 00191fbe41bfb714a80b417afd12f199, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &764765144 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114718118186782758, guid: 00191fbe41bfb714a80b417afd12f199,
+    type: 2}
+  m_PrefabInternal: {fileID: 764765143}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &906379691
 GameObject:
   m_ObjectHideFlags: 0

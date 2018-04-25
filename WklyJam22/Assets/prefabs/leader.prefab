@@ -173,9 +173,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22807b2deb029404eb6375d49d11b695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackRate: 1.5
+  accuracy: 50
   target: {fileID: 0}
   weaponHolder: {fileID: 1479123684551054}
   curWpnController: {fileID: 0}
+  canAttack: 0
 --- !u!114 &114608883156680976
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -14,7 +14,6 @@ public class LeaderMoveControl : MonoBehaviour {
 	bool flip;
 	Selection_Manager selection_Manager;
 	int clampXMin, clampXMax;
-	int areaWidth;
 	TimeManager timeManager;
 	void OnEnable(){
 		instance = this;
@@ -23,7 +22,6 @@ public class LeaderMoveControl : MonoBehaviour {
 	}
 
 	public void Init(){
-		areaWidth = Area_Controller.instance.Current.Width;
 		Camera_Controller.instance.SetTargetAndLock(this.transform);
 		pool = ObjectPool.instance;
 		selection_Manager = Selection_Manager.instance;

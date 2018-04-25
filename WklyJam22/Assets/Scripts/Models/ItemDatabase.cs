@@ -5,19 +5,9 @@ using UnityEngine;
 public class ItemDatabase{
     public static ItemDatabase instance {get; protected set;}
 
-    Dictionary<ItemType, List<Item>> ItemPrototypeMap;
-
   
     public ItemDatabase(){
         instance = this;
-    }
-
-    void InitPrototypes(){
-        ItemPrototypeMap = new Dictionary<ItemType, List<Item>>();
-    /*     ItemPrototypeMap.Add(ItemType.Weapon,
-                            new List<Item>(){
-                                new Item("Kinston Hi-Fire", ItemType.Weapon, ItemQuality.Functional)
-                            }); */
     }
 
     Stat[] GetStatsByQuality(ItemQuality quality, Stat[] baseStat){
